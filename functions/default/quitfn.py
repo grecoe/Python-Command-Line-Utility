@@ -1,4 +1,5 @@
-from interfaces.function import IFunction
+from interfaces import IFunction
+
 
 
 class QuitFn(IFunction):

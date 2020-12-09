@@ -1,6 +1,5 @@
-from menu.loader import FunctionLoader
-from menu.appmenu import Menu
-from interfaces.function import IFunction, FunctionInput
+from menu import FunctionLoader, Menu
+from interfaces import IFunction, FunctionInput
 from logutils.tracer import LogDecorator
 
 # This loads up any implementations of IFunction for the app
@@ -62,6 +61,13 @@ while True:
 
                 # If you get here, then we have what we need, call the function
                 if not argument_exception:
+                    """
+                    If the default argument of '-c' is passed the user is asking for 
+                    settings from the config to be passed to their function. 
+
+                    This code determines if '-c' is in the arguments and if so attempts 
+                    to load those configuration choices. 
+                    """
                     if IFunction.FN_CONFIGURATION in fn_input.arguments.keys():
                         if configuration_util:
                             config_names = fn_input.arguments[IFunction.FN_CONFIGURATION]
@@ -71,6 +77,8 @@ while True:
                                 for conf in config_names:
                                     fn_input.configuration[conf] = configuration_util.read_configuration_value(conf)
 
+                    # Any input is retrieved, finally call the function with an instance
+                    # of FunctionInput that will provide arguments and configuration settings.
                     value = menu_action.menu_item.action(fn_input)
                     if value:
                         print(value)

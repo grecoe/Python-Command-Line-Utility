@@ -1,29 +1,29 @@
-from interfaces.function import IFunction
-from interfaces.argumentdesc import ArgumentDescriptor
+from interfaces import IFunction, ArgumentDescriptor
 
 
 class SecondFunction(IFunction):
 
     def __init__(self):
+        # Base class expectes name in constructor
         super().__init__("SecondFunction")
 
-        # Define your arguments here
+        # Define your funciton arguments here
         self.arguments = {
             '-b': ArgumentDescriptor(True, "Some description"),
             '-c': ArgumentDescriptor(True, "Another description")
         }
 
-        # Define your menu options
+        # Define your function menu options
         self.menu_options = {
             "put": {
                 "unlimited": {
-                    "vitality": self._get_lower_name
+                    "power": self._get_lower_name
                 }
             }
         }
 
         # Default hook the help command, don't need to do this yourself
-        self._default_hooks()
+        self.set_default_hooks()
 
     def _get_lower_name(self, *args):
         # Instance of FunctionInput - interfaces\function.py
